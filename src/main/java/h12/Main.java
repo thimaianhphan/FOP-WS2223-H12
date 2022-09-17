@@ -1,5 +1,9 @@
 package h12;
 
+import h12.gui.components.MainFrame;
+
+import javax.swing.*;
+
 /**
  * Main entry point in executing the program.
  */
@@ -11,6 +15,8 @@ public class Main {
      * @param args program arguments, currently ignored
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        //These two lines are needed to display the GUI but can be removed if this method is used for something else.
+        JFrame frame = new MainFrame();
+        frame.setVisible(true);
     }
 }
