@@ -16,7 +16,7 @@ import static org.tudalgo.algoutils.student.Student.crash;
  */
 public class JSONArrayNode extends JSONNode implements JSONArray {
 
-    List<JSONElement> list;
+    private final List<JSONElement> list;
 
     /**
      * Creates a new {@link JSONArrayNode}-Instance.
@@ -28,9 +28,9 @@ public class JSONArrayNode extends JSONNode implements JSONArray {
     }
 
     /**
-     * Writes the string representation of this JSON array to the given writer using the current indentation.
+     * Writes the string representation of this {@link JSONArray} to the given writer using the current indentation.
      * <p> The formatting follows these rules:
-     * <p> 1. Every {@code JSONElement} is written to the writer using their write methode.
+     * <p> 1. Every {@link JSONElement} is written to the writer using their write methode.
      * <p> 2. The opening bracket ({@code '['}) and every {@link JSONElement} (including the {@code ','}) is followed by a line break ({@code '\n'}).
      * <p> 3. Every line break ({@code '\n'}) is followed by an indentation which is created using {@link JSONNode#writeIndentation(BufferedWriter, int)}.
      * <p> 4. The indentation in front of a {@link JSONElement} is one higher than the current indentation. The indentation in front of the closing bracket ({@code  ']'}) is the current indentation.
@@ -41,7 +41,7 @@ public class JSONArrayNode extends JSONNode implements JSONArray {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash();
+        crash(); //TODO H2 - remove if implemented
     }
 
     /**

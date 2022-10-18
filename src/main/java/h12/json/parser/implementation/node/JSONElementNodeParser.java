@@ -1,5 +1,6 @@
 package h12.json.parser.implementation.node;
 
+import h12.exceptions.BadFileEndingException;
 import h12.exceptions.JSONParseException;
 import h12.exceptions.UnexpectedCharacterException;
 import h12.json.JSONElement;
@@ -12,15 +13,16 @@ import java.util.function.Predicate;
 import static org.tudalgo.algoutils.student.Student.crash;
 
 /**
- * A parser based on a node implementation that parses a JSON element.
+ * A parser based on a node implementation that parses a {@link JSONElement}.
  */
 public class JSONElementNodeParser implements JSONElementParser {
 
-    final JSONObjectNodeParser objectParser = new JSONObjectNodeParser(this);
-    final JSONArrayNodeParser arrayParser = new JSONArrayNodeParser(this);
-    final JSONStringNodeParser stringParser = new JSONStringNodeParser(this);
-    final JSONConstantNodeParser constantParser = new JSONConstantNodeParser(this);
-    final JSONNumberNodeParser integerParser = new JSONNumberNodeParser(this);
+    private JSONObjectNodeParser objectParser = new JSONObjectNodeParser(this);
+    private JSONArrayNodeParser arrayParser = new JSONArrayNodeParser(this);
+    private JSONStringNodeParser stringParser = new JSONStringNodeParser(this);
+    private JSONConstantNodeParser constantParser = new JSONConstantNodeParser(this);
+    private JSONNumberNodeParser numberParser = new JSONNumberNodeParser(this);
+    private JSONObjectEntryNodeParser objectEntryParser = new JSONObjectEntryNodeParser(this);
 
     private final LookaheadReader reader;
 
@@ -34,26 +36,14 @@ public class JSONElementNodeParser implements JSONElementParser {
     }
 
     /**
-     * Parses the next JSON element by calling the responsible {@link JSONNodeParser}.
-     *
-     * @return The parsed {@link JSONElement} or {@code null} if the end of the {@link LookaheadReader} has been reached.
-     * @throws IOException        If an {@link IOException} occurs while reading the contents of the reader.
-     * @throws JSONParseException If the parsed JSON file is invalid.
-     */
-    @Override
-    public JSONElement parse() throws IOException {
-        return crash();
-    }
-
-    /**
      * Skips every whitespace Character until the next char is a non-whitespace character.
      *
      * <p> For the definition of a whitespace character see method {@link Character#isWhitespace(char)}.
      *
      * @throws IOException If an {@link IOException} occurs while reading the contents of the reader.
      */
-    private void skipIndentation() throws IOException {
-        crash();
+    public void skipIndentation() throws IOException {
+        crash(); //TODO H3.1 - remove if implemented
     }
 
     /**
@@ -63,8 +53,8 @@ public class JSONElementNodeParser implements JSONElementParser {
      * @throws IOException If an {@link IOException} occurs while reading the contents of the reader.
      * @see #skipIndentation()
      */
-    int acceptIt() throws IOException {
-        return crash();
+    public int acceptIt() throws IOException {
+        return crash(); //TODO H3.1 - remove if implemented
     }
 
     /**
@@ -73,10 +63,11 @@ public class JSONElementNodeParser implements JSONElementParser {
      * @param expected The expected character.
      * @throws IOException                  If an {@link IOException} occurs while reading the contents of the reader.
      * @throws UnexpectedCharacterException if the character read does not equal the expected character.
+     * @throws BadFileEndingException       If the reader has already reached the end.
      * @see #skipIndentation()
      */
-    void accept(char expected) throws IOException, UnexpectedCharacterException {
-        crash();
+    public void accept(char expected) throws IOException, UnexpectedCharacterException, BadFileEndingException {
+        crash(); //TODO H3.1 - remove if implemented
     }
 
     /**
@@ -86,8 +77,19 @@ public class JSONElementNodeParser implements JSONElementParser {
      * @throws IOException If an {@link IOException} occurs while reading the contents of the reader.
      * @see LookaheadReader
      */
-    int peek() throws IOException {
-        return crash();
+    public int peek() throws IOException {
+        return crash(); //TODO H3.1 - remove if implemented
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IOException            If an {@link IOException} occurs while reading the contents of the reader.
+     * @throws BadFileEndingException If the reader contains any characters that yet have to be processed.
+     */
+    @Override
+    public void checkEndOfFile() throws IOException, BadFileEndingException {
+        crash(); //TODO H3.1 - remove if implemented
     }
 
     /**
@@ -97,18 +99,130 @@ public class JSONElementNodeParser implements JSONElementParser {
      *
      * @param stopPred The predicate to determines whether to stop reading more characters or to continue.
      * @return A String containing the collected characters.
-     * @throws IOException If an {@link IOException} occurs while reading the contents of the reader.
+     * @throws IOException            If an {@link IOException} occurs while reading the contents of the reader.
+     * @throws BadFileEndingException If the end of the File is reached before the {@link Predicate} returned true.
      */
-    String readUntil(Predicate<Integer> stopPred) throws IOException {
-        return crash();
+    public String readUntil(Predicate<Integer> stopPred) throws IOException, BadFileEndingException {
+        return crash(); //TODO H3.1 - remove if implemented
     }
 
     /**
-     * {@inheritDoc}
+     * Parses the next {@link JSONElement} by calling the responsible {@link JSONNodeParser}.
+     *
+     * @return The parsed {@link JSONElement} or {@code null} if the end of the {@link LookaheadReader} has been reached.
+     * @throws IOException        If an {@link IOException} occurs while reading the contents of the reader.
+     * @throws JSONParseException If the parsed JSON file is invalid.
      */
     @Override
-    public void checkEndOfFile() throws IOException {
-        crash();
+    public JSONElement parse() throws IOException {
+        return crash(); //TODO H3.2 - remove if implemented
     }
 
+    /**
+     * Sets the {@link JSONObjectNodeParser} used by this {@link JSONElementNodeParser} to the given {@link JSONObjectNodeParser}.
+     *
+     * @param objectParser The new {@link JSONObjectNodeParser}.
+     */
+    public void setObjectParser(JSONObjectNodeParser objectParser) {
+        this.objectParser = objectParser;
+    }
+
+    /**
+     * Sets the {@link JSONArrayNodeParser} used by this {@link JSONElementNodeParser} to the given {@link JSONArrayNodeParser}.
+     *
+     * @param arrayParser The new {@link JSONArrayNodeParser}.
+     */
+    public void setArrayParser(JSONArrayNodeParser arrayParser) {
+        this.arrayParser = arrayParser;
+    }
+
+    /**
+     * Sets the {@link JSONStringNodeParser} used by this {@link JSONElementNodeParser} to the given {@link JSONStringNodeParser}.
+     *
+     * @param stringParser The new {@link JSONStringNodeParser}.
+     */
+    public void setStringParser(JSONStringNodeParser stringParser) {
+        this.stringParser = stringParser;
+    }
+
+    /**
+     * Sets the {@link JSONConstantNodeParser} used by this {@link JSONElementNodeParser} to the given {@link JSONConstantNodeParser}.
+     *
+     * @param constantParser The new {@link JSONConstantNodeParser}.
+     */
+    public void setConstantParser(JSONConstantNodeParser constantParser) {
+        this.constantParser = constantParser;
+    }
+
+    /**
+     * Sets the {@link JSONNumberNodeParser} used by this {@link JSONElementNodeParser} to the given {@link JSONNumberNodeParser}.
+     *
+     * @param numberParser The new {@link JSONNumberNodeParser}.
+     */
+    public void setNumberParser(JSONNumberNodeParser numberParser) {
+        this.numberParser = numberParser;
+    }
+
+    /**
+     * Sets the {@link JSONObjectEntryNodeParser} used by this {@link JSONElementNodeParser} to the given {@link JSONObjectEntryNodeParser}.
+     *
+     * @param objectEntryParser The new {@link JSONObjectEntryNodeParser}.
+     */
+    public void setObjectEntryParser(JSONObjectEntryNodeParser objectEntryParser) {
+        this.objectEntryParser = objectEntryParser;
+    }
+
+    /**
+     * Returns the {@link JSONObjectNodeParser} used by this {@link JSONElementNodeParser}.
+     *
+     * @return the {@link JSONObjectNodeParser} used by this {@link JSONElementNodeParser}.
+     */
+    public JSONObjectNodeParser getObjectParser() {
+        return objectParser;
+    }
+
+    /**
+     * Returns the {@link JSONArrayNodeParser} used by this {@link JSONElementNodeParser}.
+     *
+     * @return the {@link JSONArrayNodeParser} used by this {@link JSONElementNodeParser}.
+     */
+    public JSONArrayNodeParser getArrayParser() {
+        return arrayParser;
+    }
+
+    /**
+     * Returns the {@link JSONStringNodeParser} used by this {@link JSONElementNodeParser}.
+     *
+     * @return the {@link JSONStringNodeParser} used by this {@link JSONElementNodeParser}.
+     */
+    public JSONStringNodeParser getStringParser() {
+        return stringParser;
+    }
+
+    /**
+     * Returns the {@link JSONConstantNodeParser} used by this {@link JSONElementNodeParser}.
+     *
+     * @return the {@link JSONConstantNodeParser} used by this {@link JSONElementNodeParser}.
+     */
+    public JSONConstantNodeParser getConstantParser() {
+        return constantParser;
+    }
+
+    /**
+     * Returns the {@link JSONNumberNodeParser} used by this {@link JSONElementNodeParser}.
+     *
+     * @return the {@link JSONNumberNodeParser} used by this {@link JSONElementNodeParser}.
+     */
+    public JSONNumberNodeParser getNumberParser() {
+        return numberParser;
+    }
+
+    /**
+     * Returns the {@link JSONObjectEntryNodeParser} used by this {@link JSONElementNodeParser}.
+     *
+     * @return the {@link JSONObjectEntryNodeParser} used by this {@link JSONElementNodeParser}.
+     */
+    public JSONObjectEntryNodeParser getObjectEntryParser() {
+        return objectEntryParser;
+    }
 }

@@ -8,6 +8,7 @@ import h12.json.implementation.node.JSONStringNode;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 import static org.tudalgo.algoutils.student.Student.crash;
 
@@ -26,7 +27,6 @@ public class MyPolygon extends MyShape {
     protected final List<Integer> y;
 
     private final int edges;
-
 
     /**
      * Creates a new {@link MyPolygon}-Instance.
@@ -58,6 +58,24 @@ public class MyPolygon extends MyShape {
     }
 
     /**
+     * Converts this {@link MyPolygon} to a {@link JSONObjectNode}. The {@link JSONObjectNode} contains the following entries:
+     * <p> name: The {@link ShapeType} as a {@link JSONStringNode}.
+     * <p> edges: The amount of edges as a {@link JSONNumberNode}.
+     * <p> x: The x-coordinates of the polygon as a {@link JSONArrayNode} of {@link JSONNumberNode}.
+     * <p> y: The y-coordinates of the polygon as a {@link JSONArrayNode} of {@link JSONNumberNode}.
+     * <p> fillColor: The color used to fill the circle as a {@link JSONArrayNode}.
+     * <p> borderColor: The color used to draw the border of the circle as a {@link JSONArrayNode}.
+     *
+     * @return A {@link JSONObjectNode} containing the entries listed above.
+     * @see ColorHelper#toJSON(Color)
+     * @see ShapeType#getSpelling()
+     */
+    @Override
+    public JSONObject toJSON() {
+        return crash(); //TODO H5.1 - remove if implemented
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @param g2d The {@link Graphics2D} object used to draw this {@link MyShape} object.
@@ -72,24 +90,6 @@ public class MyPolygon extends MyShape {
         g2d.setColor(borderColor);
         g2d.drawPolygon(polygon);
 
-    }
-
-    /**
-     * Converts this {@link MyPolygon} to a {@link JSONObjectNode}. The {@link JSONObject} contains the following entries:
-     * <p> name: The {@link ShapeType} as a {@link JSONStringNode}.
-     * <p> edges: The amount of edges as a {@link JSONNumberNode}.
-     * <p> x: The x-coordinates of the polygon as a {@link JSONArrayNode} of {@link JSONNumberNode}.
-     * <p> y: The y-coordinates of the polygon as a {@link JSONArrayNode} of {@link JSONNumberNode}.
-     * <p> fillColor: The color used to fill the circle as a {@link JSONArrayNode}.
-     * <p> borderColor: The color used to draw the border of the circle as a {@link JSONArrayNode}.
-     *
-     * @return A {@link JSONObjectNode} containing the entries listed above.
-     * @see ColorHelper#toJSON(Color)
-     * @see ShapeType#getSpelling()
-     */
-    @Override
-    public JSONObject toJSON() {
-        return crash();
     }
 
     /**
@@ -139,10 +139,21 @@ public class MyPolygon extends MyShape {
         else x.set(x.size() - 1, newX);
     }
 
-
     private void replaceLastY(int newY) {
         if (y.size() == 0) y.add(newY);
         else y.set(y.size() - 1, newY);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyPolygon myPolygon = (MyPolygon) o;
+        return edges == myPolygon.edges && Objects.equals(x, myPolygon.x) && Objects.equals(y, myPolygon.y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, edges);
+    }
 }

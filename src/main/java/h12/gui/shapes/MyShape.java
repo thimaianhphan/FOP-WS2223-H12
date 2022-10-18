@@ -19,6 +19,26 @@ public abstract class MyShape {
     protected Color fillColor;
     protected Color borderColor;
 
+    private static JSONToShapeConverter jsonToShapeConverter = new JSONToShapeConverter();
+
+    /**
+     * Converts this {@link MyShape} object to a JSONElement.
+     *
+     * @return The converted {@link JSONElement}.
+     */
+    public abstract JSONElement toJSON();
+
+    /**
+     * Converts the content of the given {@link JSONObject} to a {@link MyShape}.
+     *
+     * @param element The {@link JSONElement} to convert.
+     * @return The {@link MyShape} represented by the given {@link JSONObject}.
+     * @throws JSONParseException If the given {@link JSONObject} does not represent a valid shape.
+     */
+    public static MyShape fromJSON(JSONElement element) throws JSONParseException {
+        return crash(); //TODO H5.2 - remove if implemented
+    }
+
     /**
      * Draws this {@link MyShape} using the given {@link Graphics2D} object.
      *
@@ -44,24 +64,6 @@ public abstract class MyShape {
      * @return {@code true} if the creation process is finished. Otherwise, false.
      */
     public abstract boolean nextPhase(int x, int y, int phase);
-
-    /**
-     * Converts this {@link MyShape} object to a JSONElement.
-     *
-     * @return The converted {@link JSONElement}.
-     */
-    public abstract JSONElement toJSON();
-
-    /**
-     * Converts the content of the given {@link JSONObject} to a {@link MyShape}.
-     *
-     * @param element The {@link JSONElement} to convert.
-     * @return The {@link MyShape} represented by the given {@link JSONObject}.
-     * @throws JSONParseException If the given {@link JSONObject} does not represent a valid shape.
-     */
-    public static MyShape fromJSON(JSONElement element) throws JSONParseException {
-        return crash();
-    }
 
     /**
      * Creates a new {@link MyShape} object of the given {@link ShapeType}.
@@ -100,6 +102,15 @@ public abstract class MyShape {
      */
     public void setBorderColor(Color borderColor) {
         this.borderColor = borderColor;
+    }
+
+    /**
+     * Sets the {@link JSONToShapeConverter} used to create {@link MyShape}s from {@link JSONElement}s to the given {@link JSONToShapeConverter}.
+     *
+     * @param jsonToShapeConverter The new {@link JSONToShapeConverter}.
+     */
+    public static void setJsonToShapeConverter(JSONToShapeConverter jsonToShapeConverter) {
+        MyShape.jsonToShapeConverter = jsonToShapeConverter;
     }
 }
 

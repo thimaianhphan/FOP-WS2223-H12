@@ -3,6 +3,7 @@ package h12.gui.components;
 import h12.exceptions.JSONParseException;
 import h12.gui.shapes.MyShape;
 import h12.json.JSON;
+import h12.json.JSONElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +14,7 @@ import static org.tudalgo.algoutils.student.Student.crash;
 /**
  * A class handling the loading of a canvas from a JSON file.
  */
-class LoadCanvasHandler extends FileOperationHandler {
-
-    private final JSON json;
+public class LoadCanvasHandler extends FileOperationHandler {
 
     private List<MyShape> shapes;
     private Color backgroundColor;
@@ -35,16 +34,17 @@ class LoadCanvasHandler extends FileOperationHandler {
      * Shows a {@link JFileChooser} dialog to the user and tries to load the canvas stored in the selected file.
      */
     public void load() {
-        crash();
+        crash(); //TODO H5.5 - remove if implemented
     }
 
     /**
-     * Reads the content of the root of the {@link #json} and saves them in the attributes {@link #shapes} and {@link #backgroundColor}.
+     * Reads the content of the given {@link JSONElement} and saves them in the attributes {@link #shapes} and {@link #backgroundColor}.
      *
+     * @param element The {@link JSONElement} to convert to a canvas.
      * @throws JSONParseException If the json file does not describe a valid canvas.
      */
-    public void canvasFromJSONObject() throws JSONParseException {
-        crash();
+    public void canvasFromJSONElement(JSONElement element) throws JSONParseException {
+        crash(); //TODO H5.5 - remove if implemented
     }
 
     /**

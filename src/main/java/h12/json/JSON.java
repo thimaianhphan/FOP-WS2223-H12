@@ -18,54 +18,29 @@ import static org.tudalgo.algoutils.student.Student.crash;
  */
 public class JSON {
 
-    private static JSONParserFactory parserFactory = new JSONNodeParserFactory();
-    private static IOFactory ioFactory = new FileSystemIOFactory();
-
-    private JSONElement root;
+    private JSONParserFactory parserFactory = new JSONNodeParserFactory();
+    private IOFactory ioFactory = new FileSystemIOFactory();
 
     /**
-     * Creates a new {@link JSON}-Instance with the given root element.
+     * Writes a string representation of the given {@link JSONElement} object to the given file.
      *
-     * @param root The root element of this {@link JSON}-Instance.
-     */
-    public JSON(JSONElement root) {
-        this.root = root;
-    }
-
-    /**
-     * Creates a new, empty {@link JSON}-Instance.
-     */
-    public JSON() {
-    }
-
-    /**
-     * Writes a string representation of this {@link JSON} object to the given file.
-     *
-     * @param fileName The name of the file to write the information.
+     * @param fileName The name of the file to write the root {@link JSONElement} to.
+     * @param root     The root {@link JSONElement} to write to the file.
      * @throws JSONWriteException If an exception occurs while writing to the JSON file or the {@link #ioFactory} does not support writing.
      */
-    public void write(String fileName) throws JSONWriteException {
-        crash();
+    public void write(String fileName, JSONElement root) throws JSONWriteException {
+        crash(); //TODO H4.2 - remove if implemented
     }
 
     /**
      * Reads the content of the given JSON file and parses the content of it.
-     * The parsed content will be saved to the {@link #root} object of this {@link JSON} object.
      *
      * @param fileName The fileName to the JSON file to parse.
+     * @return A {@link JSONElement} that contains the content of the parsed file.
      * @throws JSONParseException If an exception occurs while trying to parse the JSON file or the {@link #ioFactory} does not support reading.
      */
-    public void parse(String fileName) throws JSONParseException {
-        crash();
-    }
-
-    /**
-     * returns the root element of this {@link JSON}-Instance.
-     *
-     * @return the root element of this {@link JSON}-Instance.
-     */
-    public JSONElement getRoot() {
-        return root;
+    public JSONElement parse(String fileName) throws JSONParseException {
+        return crash(); //TODO H4.2 - remove if implemented
     }
 
     /**
@@ -73,16 +48,16 @@ public class JSON {
      *
      * @param parserFactory The new default {@link JSONParserFactory}.
      */
-    public static void setParserFactory(JSONParserFactory parserFactory) {
-        JSON.parserFactory = parserFactory;
+    public void setParserFactory(JSONParserFactory parserFactory) {
+        this.parserFactory = parserFactory;
     }
 
     /**
-     * Sets the default {@link IOFactory} that is used to create the {@link Reader} and {@link Writer} for the JSON files..
+     * Sets the default {@link IOFactory} that is used to create the {@link Reader} and {@link Writer} for the JSON files.
      *
      * @param ioFactory The new default {@link IOFactory}.
      */
-    public static void setIOFactory(IOFactory ioFactory) {
-        JSON.ioFactory = ioFactory;
+    public void setIOFactory(IOFactory ioFactory) {
+        this.ioFactory = ioFactory;
     }
 }

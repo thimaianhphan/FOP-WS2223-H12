@@ -35,7 +35,7 @@ public class SaveCanvasHandler extends FileOperationHandler {
      * Shows a {@link JFileChooser} dialog to the user and tries to save the current canvas to the selected file.
      */
     public void save() {
-        crash();
+        crash(); //TODO H5.4 - remove if implemented
     }
 
     /**
@@ -48,7 +48,7 @@ public class SaveCanvasHandler extends FileOperationHandler {
      * @see MyShape#toJSON()
      */
     public JSONObject canvasToJSONObject() {
-        return crash();
+        return crash(); //TODO H5.4 - remove if implemented
     }
 
 

@@ -13,7 +13,7 @@ import static org.tudalgo.algoutils.student.Student.crash;
  */
 public class JSONNumberNode extends JSONNode implements JSONNumber {
 
-    Number number;
+    private final Number number;
 
     /**
      * Creates a new {@link JSONNumberNode}-Instance.
@@ -25,7 +25,7 @@ public class JSONNumberNode extends JSONNode implements JSONNumber {
     }
 
     /**
-     * Writes the string representation of this number to the given writer.
+     * Writes the string representation of this {@link JSONNumber} to the given writer.
      *
      * @param writer      The writer used to write the string representation.
      * @param indentation The current indentation (not used by this class).
@@ -33,7 +33,7 @@ public class JSONNumberNode extends JSONNode implements JSONNumber {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash();
+        crash(); //TODO H2 - remove if implemented
     }
 
     /**

@@ -21,7 +21,7 @@ public abstract class JSONNode implements JSONElement {
      * @throws IOException If an {@link IOException} occurs while writing to the writer.
      */
     public void writeIndentation(BufferedWriter writer, int indentation) throws IOException {
-        crash();
+        crash(); //TODO H2 - remove if implemented
     }
 
 }

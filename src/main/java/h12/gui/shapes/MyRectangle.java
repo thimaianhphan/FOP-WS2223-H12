@@ -1,14 +1,15 @@
 package h12.gui.shapes;
 
+import h12.json.JSONNumber;
 import h12.json.JSONObject;
+import h12.json.JSONString;
 import h12.json.implementation.node.JSONArrayNode;
 import h12.json.implementation.node.JSONNumberNode;
 import h12.json.implementation.node.JSONObjectNode;
 import h12.json.implementation.node.JSONStringNode;
 
 import java.awt.*;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.util.Objects;
 
 /**
  * A class representing a rectangle.
@@ -44,6 +45,33 @@ public class MyRectangle extends MyShape {
     }
 
     /**
+     * Converts this {@link MyRectangle} to a {@link JSONObjectNode}. The {@link JSONObjectNode} contains the following entries:
+     * <p> name: The {@link ShapeType} as a {@link JSONStringNode}.
+     * <p> x: The x-coordinate of the upper left corner as a {@link JSONNumberNode}.
+     * <p> y: The y-coordinate of the upper left corner as a {@link JSONNumberNode}.
+     * <p> width: The width of the rectangle as a {@link JSONNumberNode}.
+     * <p> height: The height of the rectangle as a {@link JSONNumberNode}.
+     * <p> fillColor: The color used to fill the circle as a {@link JSONArrayNode}.
+     * <p> borderColor: The color used to draw the border of the circle as a {@link JSONArrayNode}.
+     *
+     * @return A {@link JSONObjectNode} containing the entries listed above.
+     * @see ColorHelper#toJSON(Color)
+     * @see ShapeType#getSpelling()
+     */
+    @Override
+    public JSONObject toJSON() {
+        return JSONObject.of(
+            JSONObject.JSONObjectEntry.of("name", JSONString.of(TYPE.getSpelling())),
+            JSONObject.JSONObjectEntry.of("x", JSONNumber.of(x)),
+            JSONObject.JSONObjectEntry.of("y", JSONNumber.of(y)),
+            JSONObject.JSONObjectEntry.of("height", JSONNumber.of(height)),
+            JSONObject.JSONObjectEntry.of("width", JSONNumber.of(width)),
+            JSONObject.JSONObjectEntry.of("fillColor", ColorHelper.toJSON(fillColor)),
+            JSONObject.JSONObjectEntry.of("borderColor", ColorHelper.toJSON(borderColor))
+        );
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @param g2d The {@link Graphics2D} object used to draw this {@link MyShape} object.
@@ -73,25 +101,6 @@ public class MyRectangle extends MyShape {
     }
 
     /**
-     * Converts this {@link MyRectangle} to a {@link JSONObjectNode}. The {@link JSONObject} contains the following entries:
-     * <p> name: The {@link ShapeType} as a {@link JSONStringNode}.
-     * <p> x: The x-coordinate of the upper left corner as a {@link JSONNumberNode}.
-     * <p> y: The y-coordinate of the upper left corner as a {@link JSONNumberNode}.
-     * <p> width: The width of the rectangle as a {@link JSONNumberNode}.
-     * <p> height: The height of the rectangle as a {@link JSONNumberNode}.
-     * <p> fillColor: The color used to fill the circle as a {@link JSONArrayNode}.
-     * <p> borderColor: The color used to draw the border of the circle as a {@link JSONArrayNode}.
-     *
-     * @return A {@link JSONObjectNode} containing the entries listed above.
-     * @see ColorHelper#toJSON(Color)
-     * @see ShapeType#getSpelling()
-     */
-    @Override
-    public JSONObject toJSON() {
-        return crash();
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @param x     The new x-coordinate.
@@ -118,4 +127,16 @@ public class MyRectangle extends MyShape {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyRectangle that = (MyRectangle) o;
+        return x == that.x && y == that.y && height == that.height && width == that.width;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, height, width);
+    }
 }

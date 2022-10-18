@@ -13,7 +13,7 @@ import static org.tudalgo.algoutils.student.Student.crash;
  */
 public class JSONStringNode extends JSONNode implements JSONString {
 
-    String string;
+    private final String string;
 
     /**
      * Creates a new {@link JSONStringNode}-Instance.
@@ -33,7 +33,7 @@ public class JSONStringNode extends JSONNode implements JSONString {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash();
+        crash(); //TODO H2 - remove if implemented
     }
 
     /**
