@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class representing a circle.
+ * A class representing a triangle.
  *
  * @see MyShape
  */

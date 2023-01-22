@@ -51,8 +51,8 @@ public class MyRectangle extends MyShape {
      * <p> y: The y-coordinate of the upper left corner as a {@link JSONNumberNode}.
      * <p> width: The width of the rectangle as a {@link JSONNumberNode}.
      * <p> height: The height of the rectangle as a {@link JSONNumberNode}.
-     * <p> fillColor: The color used to fill the circle as a {@link JSONArrayNode}.
-     * <p> borderColor: The color used to draw the border of the circle as a {@link JSONArrayNode}.
+     * <p> fillColor: The color used to fill the rectangle as a {@link JSONArrayNode}.
+     * <p> borderColor: The color used to draw the border of the rectangle as a {@link JSONArrayNode}.
      *
      * @return A {@link JSONObjectNode} containing the entries listed above.
      * @see ColorHelper#toJSON(Color)

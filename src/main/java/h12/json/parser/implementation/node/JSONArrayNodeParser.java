@@ -20,7 +20,7 @@ import static org.tudalgo.algoutils.student.Student.crash;
  *   420,
  *   "abc"
  * ]</pre>
- * <p> Output: {@code JSONArray.of(JSONNumber.of(420), JSONString.of("abc))}
+ * <p> Output: {@code JSONArray.of(JSONNumber.of(420), JSONString.of("abc"))}
  */
 public class JSONArrayNodeParser implements JSONNodeParser {
 

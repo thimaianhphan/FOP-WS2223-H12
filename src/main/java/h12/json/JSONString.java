@@ -18,7 +18,7 @@ public interface JSONString extends JSONElement {
      * Creates a new {@link JSONStringNode}-Instance containing the given {@link String} and returns it.
      *
      * @param string The {@link String} the created {@link JSONStringNode} should contain.
-     * @return The create {@link JSONStringNode}.
+     * @return The created {@link JSONStringNode}.
      */
     static JSONStringNode of(String string) {
         return new JSONStringNode(string);

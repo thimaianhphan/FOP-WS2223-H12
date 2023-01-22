@@ -89,7 +89,7 @@ public class JSONObjectNode extends JSONNode implements JSONObject {
         }
 
         /**
-         * Writes the identifier and the value of this {@link JSONObjectEntry} seperated by a colon({@code ':')}to the given {@link BufferedWriter} using the current indentation.
+         * Writes the identifier and the value of this {@link JSONObjectEntry} separated by a colon({@code ':')}to the given {@link BufferedWriter} using the current indentation.
          * <p> The colon is followed by a single space.
          *
          * @param writer      The writer used to write the string representation.

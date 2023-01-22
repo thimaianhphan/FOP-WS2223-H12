@@ -12,7 +12,7 @@ import java.util.List;
 public class StraightLine extends MyPolygon {
 
     /**
-     * Creates a new {@link MyCircle}-Instance.
+     * Creates a new {@link StraightLine}-Instance.
      *
      * @param ax    The x-coordinate of the first end of the line.
      * @param ay    The y-coordinate of the first end of the line.

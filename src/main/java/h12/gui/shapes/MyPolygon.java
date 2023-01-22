@@ -63,8 +63,8 @@ public class MyPolygon extends MyShape {
      * <p> edges: The amount of edges as a {@link JSONNumberNode}.
      * <p> x: The x-coordinates of the polygon as a {@link JSONArrayNode} of {@link JSONNumberNode}.
      * <p> y: The y-coordinates of the polygon as a {@link JSONArrayNode} of {@link JSONNumberNode}.
-     * <p> fillColor: The color used to fill the circle as a {@link JSONArrayNode}.
-     * <p> borderColor: The color used to draw the border of the circle as a {@link JSONArrayNode}.
+     * <p> fillColor: The color used to fill the polygon as a {@link JSONArrayNode}.
+     * <p> borderColor: The color used to draw the border of the polygon as a {@link JSONArrayNode}.
      *
      * @return A {@link JSONObjectNode} containing the entries listed above.
      * @see ColorHelper#toJSON(Color)
