@@ -27,8 +27,19 @@ public class TutorTests_WriteJSONTest {
 
         if (verifier != null) verifier.accept(element);
 
-        assertEquals(expected, actual, context,
-            TR -> "Method did not write the correct String to the BufferedWriter");
+        String message = "Methode did not write the correct String to the BufferedWriter.";
+
+        if (actual.replace(" ", "").replace("\n", "")
+            .equals(expected.replace(" ", "").replace("\n", ""))) {
+            message += " The contents of the expected and actual json element are equal but the whitespaces do not match.";
+        }
+
+        String finalMessage = message;
+        assertEquals(createJSONString(expected), createJSONString(actual), context, TR -> finalMessage);
+    }
+
+    public String createJSONString(String json) {
+        return "\\<span style=\"white-space: pre;\"\\>\n" + json + "\n\\</span\\>";
     }
 
     public String getActual(JSONElement element, int indentation) throws IOException {
