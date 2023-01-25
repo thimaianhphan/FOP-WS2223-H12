@@ -17,7 +17,7 @@ import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.context
 public class TutorTests_H1_2_LookaheadReaderTest {
 
     @ParameterizedTest
-    @CsvSource("012345")
+    @CsvSource("012345\t6789")
     public void testLookaheadReader(String input) throws IOException {
 
         StringReader reader = new StringReader(input);

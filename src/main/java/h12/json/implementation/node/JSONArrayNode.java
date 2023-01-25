@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * A class representing a JSON array implemented as a node.
  * <p> The contents of the array are stored in a {@code List&lt;JSONElement&gt;}.
@@ -41,7 +39,18 @@ public class JSONArrayNode extends JSONNode implements JSONArray {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash(); //TODO H2 - remove if implemented
+        int i = 0;
+        writer.write("[");
+        for (JSONElement e : list) {
+            writer.write("\n");
+            writeIndentation(writer, indentation + 1);
+            e.write(writer, indentation + 1);
+            if (i < list.size() - 1) writer.write(",");
+            i++;
+        }
+        writer.write("\n");
+        writeIndentation(writer, indentation);
+        writer.write("]");
     }
 
     /**

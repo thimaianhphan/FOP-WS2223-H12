@@ -1,10 +1,6 @@
 package h12.ioFactory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.io.*;
 
 /**
  * A factory for creating {@link BufferedReader} and {@link BufferedWriter} linked to the file system.
@@ -20,7 +16,7 @@ public class FileSystemIOFactory implements IOFactory {
      */
     @Override
     public BufferedReader createReader(String resourceName) throws IOException {
-        return crash(); //TODO H1.1 - remove if implemented
+        return new BufferedReader(new FileReader(resourceName));
     }
 
     /**
@@ -32,7 +28,7 @@ public class FileSystemIOFactory implements IOFactory {
      */
     @Override
     public BufferedWriter createWriter(String resourceName) throws IOException {
-        return crash(); //TODO H1.1 - remove if implemented
+        return new BufferedWriter(new FileWriter(resourceName));
     }
 
     /**

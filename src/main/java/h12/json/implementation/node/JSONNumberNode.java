@@ -6,8 +6,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * A class representing a JSON number implemented as a node.
  */
@@ -33,7 +31,7 @@ public class JSONNumberNode extends JSONNode implements JSONNumber {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash(); //TODO H2 - remove if implemented
+        writer.write(getNumber() + "");
     }
 
     /**

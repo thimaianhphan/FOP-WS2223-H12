@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * A class representing a JSON object implemented as a node.
  * <p> The object entries of the object are stored in a {@code Set&lt;JSONObjectEntry&gt;}.
@@ -43,7 +41,19 @@ public class JSONObjectNode extends JSONNode implements JSONObject {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash(); //TODO H2 - remove if implemented
+        int i = 0;
+        writer.write("{");
+        for (JSONObjectEntry o : objectEntries) {
+            writer.write("\n");
+            writeIndentation(writer, indentation + 1);
+            o.write(writer, indentation);
+            if (i < objectEntries.size() - 1) writer.write(",");
+            i++;
+        }
+        writer.write("\n");
+        writeIndentation(writer, indentation);
+        writer.write("}");
+
     }
 
     /**
@@ -98,7 +108,9 @@ public class JSONObjectNode extends JSONNode implements JSONObject {
          */
         @Override
         public void write(BufferedWriter writer, int indentation) throws IOException {
-            crash(); //TODO H2 - remove if implemented
+            identifier.write(writer, indentation);
+            writer.write(": ");
+            getValue().write(writer, indentation);
         }
 
         /**

@@ -7,8 +7,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * A class representing a JSON constant implemented as a node.
  */
@@ -35,7 +33,7 @@ public class JSONConstantNode extends JSONNode implements JSONConstant {
      */
     @Override
     public void write(BufferedWriter writer, int indentation) throws IOException {
-        crash(); //TODO H2 - remove if implemented
+        writer.write(getConstant().getSpelling());
     }
 
     /**

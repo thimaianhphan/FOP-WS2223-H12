@@ -5,8 +5,6 @@ import h12.json.JSONElement;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * An abstract class representing an JSON element implemented as a node.
  */
@@ -21,7 +19,7 @@ public abstract class JSONNode implements JSONElement {
      * @throws IOException If an {@link IOException} occurs while writing to the writer.
      */
     public void writeIndentation(BufferedWriter writer, int indentation) throws IOException {
-        crash(); //TODO H2 - remove if implemented
+        for (int i = 0; i < indentation; i++) writer.write("  ");
     }
 
 }
