@@ -35,7 +35,7 @@ public interface JSONNumber extends JSONElement {
      * Creates a new {@link JSONNumberNode}-Instance containing the given {@link Number} and returns it.
      *
      * @param number The {@link Number} the created {@link JSONNumberNode} should contain.
-     * @return The create {@link JSONNumberNode}.
+     * @return The created {@link JSONNumberNode}.
      */
     static JSONNumberNode of(Number number) {
         return new JSONNumberNode(number);
