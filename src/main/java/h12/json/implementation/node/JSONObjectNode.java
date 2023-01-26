@@ -67,6 +67,13 @@ public class JSONObjectNode extends JSONNode implements JSONObject {
     }
 
     @Override
+    public String toString() {
+        return "JSONObjectNode{" +
+            "objectEntries=" + objectEntries +
+            '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -131,6 +138,14 @@ public class JSONObjectNode extends JSONNode implements JSONObject {
         @Override
         public JSONElement getValue() {
             return value;
+        }
+
+        @Override
+        public String toString() {
+            return "JSONObjectEntryNode{" +
+                "identifier=" + identifier +
+                ", value=" + value +
+                '}';
         }
 
         @Override

@@ -1,5 +1,6 @@
 package h12.h3;
 
+import h12.exceptions.JSONParseException;
 import h12.json.JSONElement;
 import h12.json.LookaheadReader;
 import h12.json.parser.implementation.node.*;
@@ -90,6 +91,32 @@ public class TutorTests_JSONParseTest {
 
         assertThrows(expected, parser::parse, context,
             TR -> "Method parse() did not throw the correct exception when given an invalid input");
+    }
+
+    public void testParseExceptionWithMessage(Class<? extends Exception> expected, Function<JSONElementNodeParser, JSONNodeParser> parserCreator,
+                                              String input, Consumer<JSONElementNodeParser> mocker, String... expectedMessages) throws IOException {
+        testParseException(expected, parserCreator, input, mocker);
+
+        LookaheadReader reader = createLookaheadReader(input);
+        JSONElementNodeParser elementParser = createJSONElementNodeParser(reader);
+        JSONNodeParser parser = parserCreator.apply(elementParser);
+
+        Context context = contextBuilder()
+            .add("input", input)
+            .subject(parser.getClass().getSimpleName())
+            .build();
+
+        try {
+            parser.parse();
+        } catch (JSONParseException e) {
+            for (String expectedMessage : expectedMessages) {
+                if (expectedMessage.equals(e.getMessage())) {
+                    return;
+                }
+            }
+            assertEquals(String.join(" \\<b\\>or\\</b\\> ", expectedMessages), e.getMessage(), context,
+                TR -> "The message of the thrown exception is not correct");
+        }
     }
 
     protected void mockNumberParser(JSONElementNodeParser elementNodeParser) {

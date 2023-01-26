@@ -64,6 +64,13 @@ public class JSONArrayNode extends JSONNode implements JSONArray {
     }
 
     @Override
+    public String toString() {
+        return "JSONArrayNode{" +
+            "list=" + list +
+            '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
