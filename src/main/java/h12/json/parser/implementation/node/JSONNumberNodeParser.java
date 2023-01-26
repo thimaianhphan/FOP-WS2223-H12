@@ -6,8 +6,6 @@ import h12.json.implementation.node.JSONNumberNode;
 
 import java.io.IOException;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * A parser based on a node implementation that parses a {@link h12.json.JSONNumber}.
  *
@@ -37,7 +35,23 @@ public class JSONNumberNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONNumberNode parse() throws IOException, InvalidNumberException {
-        return crash(); //TODO H3.3 - remove if implemented
+        String res = parser.readUntil(i -> !isSpecialCharacter(i) && !Character.isDigit(i));
+        boolean hasPoint = res.contains(".");
+        Number number;
+        try {
+            if (hasPoint) number = Double.parseDouble(res);
+            else number =  Integer.parseInt(res);
+        } catch (NumberFormatException ex) {
+            throw new InvalidNumberException(res);
+        }
+        return new JSONNumberNode(number);
+    }
+
+    private boolean isSpecialCharacter(int i) {
+        return switch(i) {
+            case 43, 45, 46 -> true;
+            default -> false;
+        };
     }
 
 }

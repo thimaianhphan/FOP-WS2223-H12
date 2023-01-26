@@ -7,8 +7,6 @@ import h12.json.implementation.node.JSONConstantNode;
 
 import java.io.IOException;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * A parser based on a node implementation that parses a {@link h12.json.JSONConstant}.
  * <p>
@@ -38,7 +36,11 @@ public class JSONConstantNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONConstantNode parse() throws IOException, InvalidConstantException {
-
+        String ans = parser.readUntil(i -> !Character.isLetter(i));
+        if (ans.equals(JSONConstants.TRUE.getSpelling())) return new JSONConstantNode(JSONConstants.TRUE);
+        else if (ans.equals(JSONConstants.FALSE.getSpelling())) return new JSONConstantNode(JSONConstants.FALSE);
+        else if (ans.equals(JSONConstants.NULL.getSpelling())) return new JSONConstantNode(JSONConstants.NULL);
+        else throw new InvalidConstantException(ans);
     }
 
 }

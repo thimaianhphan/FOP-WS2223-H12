@@ -6,7 +6,6 @@ import h12.exceptions.TrailingCommaException;
 import h12.json.JSONArray;
 import h12.json.JSONElement;
 import h12.json.implementation.node.JSONArrayNode;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
@@ -47,11 +46,21 @@ public class JSONArrayNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONArrayNode parse() throws IOException, JSONParseException {
-        parser.accept('{');
+        parser.accept('[');
         List<JSONElement> list = new ArrayList<>();
-        if (parser.parse() == null) throw new BadFileEndingException();
-        var val = parser.parse();
-        list.add(val);
+        JSONElement val;
+        boolean hasComma = false;
+        while (parser.peek() != -1) {
+            if (parser.parse() == null) throw new BadFileEndingException();
+            if (hasComma && parser.peek() == 93) throw new TrailingCommaException();
+            val = parser.parse();
+            if (parser.peek() != -1) {
+                parser.accept(',');
+                hasComma = true;
+            }
+            list.add(val);
+        }
+        parser.accept(']');
         return new JSONArrayNode(list);
     }
 

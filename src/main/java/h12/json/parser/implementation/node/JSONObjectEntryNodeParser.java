@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import static h12.json.JSONObject.JSONObjectEntry;
 import static h12.json.implementation.node.JSONObjectNode.JSONObjectEntryNode;
-import static org.tudalgo.algoutils.student.Student.crash;
 
 /**
  * A parser based on a node implementation that parses a {@link JSONObjectEntry}.
@@ -42,6 +41,10 @@ public class JSONObjectEntryNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONObjectEntryNode parse() throws IOException, JSONParseException {
-        return crash(); //TODO H3.3 - remove if implemented
+        var jsonStringNode = parser.getStringParser().parse();
+        parser.accept(':');
+        var jsonElement = parser.parse();
+        if (jsonElement == null) throw new BadFileEndingException();
+        return new JSONObjectEntryNode(jsonStringNode, jsonElement);
     }
 }

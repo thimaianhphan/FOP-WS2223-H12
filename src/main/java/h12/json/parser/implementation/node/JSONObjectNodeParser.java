@@ -1,13 +1,14 @@
 package h12.json.parser.implementation.node;
 
+import h12.exceptions.BadFileEndingException;
 import h12.exceptions.JSONParseException;
 import h12.exceptions.TrailingCommaException;
 import h12.json.JSONObject;
 import h12.json.implementation.node.JSONObjectNode;
 
 import java.io.IOException;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A parser based on a node implementation that parses a {@link JSONObject}.
@@ -45,7 +46,22 @@ public class JSONObjectNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONObjectNode parse() throws IOException, JSONParseException {
-        return crash(); //TODO H3.3 - remove if implemented
+        parser.accept('{');
+        Set<JSONObject.JSONObjectEntry> set = new HashSet<>();
+        JSONObjectNode.JSONObjectEntry val;
+        boolean hasComma = false;
+        int tracker = parser.peek();
+        while (parser.peek() != -1) {
+            if (hasComma && parser.peek() == 125) throw new TrailingCommaException();
+            val = parser.getObjectEntryParser().parse();
+            if (parser.peek() != -1) {
+                parser.accept(',');
+                hasComma = true;
+            }
+            set.add(val);
+        }
+        parser.accept('}');
+        return new JSONObjectNode(set);
     }
 
 }

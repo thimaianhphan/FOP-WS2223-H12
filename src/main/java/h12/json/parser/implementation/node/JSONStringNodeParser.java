@@ -37,7 +37,6 @@ public class JSONStringNodeParser implements JSONNodeParser {
         parser.accept('"');
         String string = parser.readUntil(i -> i == '"');
         parser.accept('"');
-
         return new JSONStringNode(string);
     }
 
