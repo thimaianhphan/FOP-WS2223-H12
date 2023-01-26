@@ -38,7 +38,7 @@ public class JSONConstantNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONConstantNode parse() throws IOException, InvalidConstantException {
-        return crash(); //TODO H3.3 - remove if implemented
+
     }
 
 }

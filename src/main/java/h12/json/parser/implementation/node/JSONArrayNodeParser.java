@@ -4,11 +4,12 @@ import h12.exceptions.BadFileEndingException;
 import h12.exceptions.JSONParseException;
 import h12.exceptions.TrailingCommaException;
 import h12.json.JSONArray;
+import h12.json.JSONElement;
 import h12.json.implementation.node.JSONArrayNode;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.util.*;
 
 /**
  * A parser based on a node implementation that parses a {@link h12.json.JSONArray}.
@@ -46,7 +47,12 @@ public class JSONArrayNodeParser implements JSONNodeParser {
      */
     @Override
     public JSONArrayNode parse() throws IOException, JSONParseException {
-        return crash(); //TODO H3.3 - remove if implemented
+        parser.accept('{');
+        List<JSONElement> list = new ArrayList<>();
+        if (parser.parse() == null) throw new BadFileEndingException();
+        var val = parser.parse();
+        list.add(val);
+        return new JSONArrayNode(list);
     }
 
 }
