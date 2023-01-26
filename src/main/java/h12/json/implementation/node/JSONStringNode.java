@@ -47,6 +47,13 @@ public class JSONStringNode extends JSONNode implements JSONString {
     }
 
     @Override
+    public String toString() {
+        return "JSONStringNode{" +
+            "string='" + string + '\'' +
+            '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

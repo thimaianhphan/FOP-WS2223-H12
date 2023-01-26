@@ -49,6 +49,13 @@ public class JSONConstantNode extends JSONNode implements JSONConstant {
     }
 
     @Override
+    public String toString() {
+        return "JSONConstantNode{" +
+            "constant=" + constant +
+            '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

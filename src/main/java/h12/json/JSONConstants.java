@@ -24,4 +24,10 @@ public enum JSONConstants {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "JSONConstants{" +
+            "name='" + name + '\'' +
+            '}';
+    }
 }
