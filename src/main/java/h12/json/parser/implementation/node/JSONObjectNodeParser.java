@@ -17,7 +17,7 @@ import static org.tudalgo.algoutils.student.Student.crash;
  * <pre>
  * {
  *   "abc": 69,
- *   "def": 70,
+ *   "def": 70
  * }</pre>
  * <p> Output: {@code JSONObject.of(JSONObjectEntry.of("abc", JSONNumber.of(69)), JSONObjectEntry.of("def", JSONNumber.of(70)))}
  */
