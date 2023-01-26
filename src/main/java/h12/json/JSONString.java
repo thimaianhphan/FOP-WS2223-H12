@@ -8,7 +8,7 @@ import h12.json.implementation.node.JSONStringNode;
 public interface JSONString extends JSONElement {
 
     /**
-     * If present, returns the string this {@link JSONElement} represents.
+     * Returns the string this {@link JSONElement} represents.
      *
      * @return The string this {@link JSONElement} represents.
      */

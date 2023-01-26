@@ -13,7 +13,7 @@ import static h12.json.implementation.node.JSONObjectNode.JSONObjectEntryNode;
 public interface JSONObject extends JSONElement {
 
     /**
-     * If present, returns a {@link Set} containing the objectEntries of this {@link JSONObject}.
+     * Returns a {@link Set} containing the objectEntries of this {@link JSONObject}.
      *
      * @return A {@link Set} containing the objectEntries of this {@link JSONObject}.
      */
