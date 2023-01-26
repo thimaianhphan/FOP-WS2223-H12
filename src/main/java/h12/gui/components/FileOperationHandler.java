@@ -44,7 +44,7 @@ public abstract class FileOperationHandler {
         JFileChooser jfc = new JFileChooser(defaultPath);
         jfc.setFileFilter(new FileNameExtensionFilter("json files", "json"));
 
-        int returnValue = jfc.showSaveDialog(controlPanel);
+        int returnValue = jfc.showDialog(controlPanel, "Select");
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             return jfc.getSelectedFile().getPath();
         }
