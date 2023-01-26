@@ -1,6 +1,5 @@
 package h12.json.parser.implementation.node;
 
-import h12.exceptions.BadFileEndingException;
 import h12.exceptions.JSONParseException;
 import h12.exceptions.TrailingCommaException;
 import h12.json.JSONObject;
@@ -49,14 +48,11 @@ public class JSONObjectNodeParser implements JSONNodeParser {
         parser.accept('{');
         Set<JSONObject.JSONObjectEntry> set = new HashSet<>();
         JSONObjectNode.JSONObjectEntry val;
-        boolean hasComma = false;
-        int tracker = parser.peek();
-        while (parser.peek() != -1) {
-            if (hasComma && parser.peek() == 125) throw new TrailingCommaException();
+        while (parser.peek() != 125) {
             val = parser.getObjectEntryParser().parse();
-            if (parser.peek() != -1) {
+            if (parser.peek() != 125) {
                 parser.accept(',');
-                hasComma = true;
+                if (parser.peek() == 125) throw new TrailingCommaException();
             }
             set.add(val);
         }

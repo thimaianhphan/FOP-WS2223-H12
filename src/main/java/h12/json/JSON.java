@@ -8,10 +8,7 @@ import h12.json.parser.JSONParser;
 import h12.json.parser.JSONParserFactory;
 import h12.json.parser.implementation.node.JSONNodeParserFactory;
 
-import java.io.Reader;
-import java.io.Writer;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.io.*;
 
 /**
  * A class for handling JSON files.
@@ -29,7 +26,12 @@ public class JSON {
      * @throws JSONWriteException If an exception occurs while writing to the JSON file or the {@link #ioFactory} does not support writing.
      */
     public void write(String fileName, JSONElement root) throws JSONWriteException {
-        crash(); //TODO H4.2 - remove if implemented
+        if (!ioFactory.supportsWriter()) throw new JSONWriteException("The current ioFactory does not support writing!");
+        try(BufferedWriter bw = ioFactory.createWriter(fileName)) {
+            root.write(bw, 0);
+        } catch (IOException ex) {
+            throw new JSONWriteException(ex.getMessage());
+        }
     }
 
     /**
@@ -40,7 +42,14 @@ public class JSON {
      * @throws JSONParseException If an exception occurs while trying to parse the JSON file or the {@link #ioFactory} does not support reading.
      */
     public JSONElement parse(String fileName) throws JSONParseException {
-        return crash(); //TODO H4.2 - remove if implemented
+        if(!ioFactory.supportsReader()) throw new JSONParseException("The current ioFactory does not support reading!");
+        try(BufferedReader br = ioFactory.createReader(fileName);
+            LookaheadReader reader = new LookaheadReader(br)) {
+            JSONParser object = parserFactory.createParser(reader);
+            return object.parse();
+        } catch (IOException ex) {
+            throw new JSONParseException(ex.getMessage());
+        }
     }
 
     /**

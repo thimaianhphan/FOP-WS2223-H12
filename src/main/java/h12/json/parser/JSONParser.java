@@ -3,7 +3,7 @@ package h12.json.parser;
 import h12.exceptions.JSONParseException;
 import h12.json.JSONElement;
 
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.io.IOException;
 
 /**
  * A class handling the parsing of JSON files.
@@ -28,6 +28,12 @@ public class JSONParser {
      * @throws JSONParseException If an exception occurs while trying to parse the contents of the JSON file.
      */
     public JSONElement parse() throws JSONParseException {
-        return crash(); //TODO H4.1 - remove if implemented
+        try {
+            var res = elementParser.parse();
+            elementParser.checkEndOfFile();
+            return res;
+        } catch(IOException ex) {
+            throw new JSONParseException(ex.getMessage());
+        }
     }
 }

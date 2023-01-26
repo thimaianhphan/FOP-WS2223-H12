@@ -49,14 +49,12 @@ public class JSONArrayNodeParser implements JSONNodeParser {
         parser.accept('[');
         List<JSONElement> list = new ArrayList<>();
         JSONElement val;
-        boolean hasComma = false;
-        while (parser.peek() != -1) {
-            if (parser.parse() == null) throw new BadFileEndingException();
-            if (hasComma && parser.peek() == 93) throw new TrailingCommaException();
+        while (parser.peek() != 93) {
             val = parser.parse();
-            if (parser.peek() != -1) {
+            if (val == null) throw new BadFileEndingException();
+            if (parser.peek() != 93) {
                 parser.accept(',');
-                hasComma = true;
+                if (parser.peek() == 93) throw new TrailingCommaException();
             }
             list.add(val);
         }
