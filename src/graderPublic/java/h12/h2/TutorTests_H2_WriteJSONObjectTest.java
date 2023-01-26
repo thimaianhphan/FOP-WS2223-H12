@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
-import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.fail;
 
 @TestForSubmission
 public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest {
 
     @ParameterizedTest
     @CsvSource("a, 1, b, 2, c, 3, 1")
-    public void testWriteJSONObject(String k1, int v1, String k2, int v2, String k3, int v3, int indentation) throws IOException {
+    public void testWriteJSONObject(String k1, int v1, String k2, int v2, String k3, int v3, int indentation) throws Throwable {
         JSONObjectNode.JSONObjectEntryNode mockedJSONObjectEntry1 = createMockedJSONObjectEntry(new JSONStringNode(k1), new JSONNumberNode(v1));
         JSONObjectNode.JSONObjectEntryNode mockedJSONObjectEntry2 = createMockedJSONObjectEntry(new JSONStringNode(k2), new JSONNumberNode(v2));
         JSONObjectNode.JSONObjectEntryNode mockedJSONObjectEntry3 = createMockedJSONObjectEntry(new JSONStringNode(k3), new JSONNumberNode(v3));
@@ -36,12 +35,6 @@ public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest 
             mockedJSONObjectEntry2,
             mockedJSONObjectEntry3
         );
-
-        Context context = contextBuilder()
-            .add("input", "{%s: %d, %s: %d, %s: %d}".formatted(k1, v1, k2, v2, k3, v3))
-            .add("indentation", indentation)
-            .subject("JSONObjectNode#write(BufferedWriter, int)")
-            .build();
 
         String actual = getActual(object, indentation);
 
@@ -58,6 +51,9 @@ public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest 
             endIndentation.append("  ");
         }
 
+        boolean withoutWhitespaceEqual = false;
+        String closestExpected = "";
+
         List<JSONObjectEntry> entries = new ArrayList<>(object.getObjectEntries());
         for (List<JSONObjectEntry> permutation : getAllPermutations(entries)) { //the order of the elements is not relevant
             String expected = "{\n%s\"%s\": %d,\n%s\"%s\": %d,\n%s\"%s\": %d\n%s}".formatted(
@@ -68,9 +64,34 @@ public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest 
             );
 
             if (expected.equals(actual)) return;
+
+            if (expected.replace(" ", "").replace("\n", "")
+                .equals(actual.replace(" ", "").replace("\n", ""))) {
+                withoutWhitespaceEqual = true;
+                closestExpected = expected;
+            }
+
+            if (!withoutWhitespaceEqual) {
+                closestExpected = expected;
+            }
         }
 
-        fail(context, TR -> "Method did not write the correct String to the BufferedWriter");
+        Context context = contextBuilder()
+            .add("input", closestExpected)
+            .add("indentation", indentation)
+            .subject("JSONObjectNode#write(BufferedWriter, int)")
+            .build();
+
+        String message = "Methode did not write the correct String to the BufferedWriter.";
+
+        if (withoutWhitespaceEqual) {
+            message += " The contents of the expected and actual json element are equal but the whitespaces do not match.";
+        }
+
+        message += "\nNote that the order of the object entries does not matter";
+
+        String finalMessage = message;
+        assertEquals(createJSONString(closestExpected), createJSONString(actual), context, TR -> finalMessage);
     }
 
     private static <T> List<List<T>> getAllPermutations(List<T> input) {

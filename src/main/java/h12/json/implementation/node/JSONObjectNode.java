@@ -57,9 +57,9 @@ public class JSONObjectNode extends JSONNode implements JSONObject {
     }
 
     /**
-     * Returns a map containing the object entries of this JSON object.
+     * Returns a {@link Set} containing the object entries of this {@link JSONObjectNode}.
      *
-     * @return a map containing the object entries.
+     * @return a {@link Set} containing the object entries.
      */
     @Override
     public Set<JSONObjectEntry> getObjectEntries() {
