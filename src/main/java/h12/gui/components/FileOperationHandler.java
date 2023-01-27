@@ -5,8 +5,6 @@ import h12.json.JSON;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 /**
  * An abstract class for handling an interaction with a file.
  */
@@ -31,7 +29,13 @@ public abstract class FileOperationHandler {
      * @return {@code true}, if this file name is valid. Otherwise {@code false}.
      */
     public boolean checkFileName(String fileName) {
-        return crash(); //TODO H5.3 - remove if implemented
+        if (fileName == null) {
+            showErrorDialog("No file selected!");
+            return false;
+        } else if (!fileName.endsWith(".json")) {
+            showErrorDialog("Invalid file type!");
+            return false;
+        } else return true;
     }
 
     /**

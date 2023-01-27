@@ -1,5 +1,6 @@
 package h12.gui.shapes;
 
+import h12.json.JSONElement;
 import h12.json.JSONObject;
 import h12.json.implementation.node.JSONArrayNode;
 import h12.json.implementation.node.JSONNumberNode;
@@ -9,8 +10,6 @@ import h12.json.implementation.node.JSONStringNode;
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
-
-import static org.tudalgo.algoutils.student.Student.crash;
 
 /**
  * A class representing a polygon.
@@ -72,7 +71,27 @@ public class MyPolygon extends MyShape {
      */
     @Override
     public JSONObject toJSON() {
-        return crash(); //TODO H5.1 - remove if implemented
+        JSONStringNode name = new JSONStringNode(TYPE.getSpelling());
+        JSONObjectNode.JSONObjectEntryNode nameOfShape = JSONObject.JSONObjectEntry.of("name", name);
+
+        JSONNumberNode edge = new JSONNumberNode(edges);
+        JSONObjectNode.JSONObjectEntryNode numberOfEdges = JSONObject.JSONObjectEntry.of("edges", edge);
+
+        var a = x.stream().map(JSONNumberNode::new).map(JSONElement.class::cast).toList();
+        JSONArrayNode arrayOfX = new JSONArrayNode(a);
+        JSONObjectNode.JSONObjectEntryNode x_coordinates = JSONObject.JSONObjectEntry.of("x", arrayOfX);
+
+        var b = y.stream().map(JSONNumberNode::new).map(JSONElement.class::cast).toList();
+        JSONArrayNode arrayOfY = new JSONArrayNode(b);
+        JSONObjectNode.JSONObjectEntryNode y_coordinates = JSONObject.JSONObjectEntry.of("y", arrayOfY);
+
+        var fill = ColorHelper.toJSON(fillColor);
+        JSONObjectNode.JSONObjectEntryNode fillColors = JSONObject.JSONObjectEntry.of("fillColor", fill);
+
+        var border = ColorHelper.toJSON(borderColor);
+        JSONObjectNode.JSONObjectEntryNode borderColors = JSONObject.JSONObjectEntry.of("borderColor", border);
+
+        return JSONObject.of(nameOfShape, numberOfEdges, x_coordinates, y_coordinates, fillColors, borderColors);
     }
 
     /**

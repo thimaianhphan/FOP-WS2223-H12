@@ -1,7 +1,11 @@
 package h12.gui.components;
 
+import h12.exceptions.JSONWriteException;
 import h12.gui.shapes.ColorHelper;
 import h12.gui.shapes.MyShape;
+import h12.ioFactory.FileSystemIOFactory;
+import h12.json.JSONArray;
+import h12.json.JSONElement;
 import h12.json.JSONObject;
 import h12.json.implementation.node.JSONArrayNode;
 import h12.json.implementation.node.JSONObjectNode;
@@ -9,8 +13,6 @@ import h12.json.implementation.node.JSONObjectNode;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-
-import static org.tudalgo.algoutils.student.Student.crash;
 
 /**
  * A class handling the saving of a canvas to a JSON file.
@@ -35,7 +37,17 @@ public class SaveCanvasHandler extends FileOperationHandler {
      * Shows a {@link JFileChooser} dialog to the user and tries to save the current canvas to the selected file.
      */
     public void save() {
-        crash(); //TODO H5.4 - remove if implemented
+        String directory = System.getProperty("user.dir");
+        String chosenFile = selectFile(directory);
+        if (chosenFile != null && checkFileName(chosenFile)) {
+            json.setIOFactory(new FileSystemIOFactory());
+            try {
+                json.write(chosenFile, canvasToJSONObject());
+                showSuccessDialog(chosenFile);
+            } catch (JSONWriteException ex) {
+                showErrorDialog(ex.getMessage());
+            }
+        }
     }
 
     /**
@@ -48,7 +60,14 @@ public class SaveCanvasHandler extends FileOperationHandler {
      * @see MyShape#toJSON()
      */
     public JSONObject canvasToJSONObject() {
-        return crash(); //TODO H5.4 - remove if implemented
+        JSONArray backgroundColorArray = ColorHelper.toJSON(background);
+        JSONObject.JSONObjectEntry backgroundColor = JSONObject.JSONObjectEntry.of("background", backgroundColorArray);
+
+        List<JSONElement> listOfShapes = contents.stream().map(MyShape::toJSON).toList();
+        JSONArray shapesArray = new JSONArrayNode(listOfShapes);
+        JSONObject.JSONObjectEntry shapes = JSONObject.JSONObjectEntry.of("shapes", shapesArray);
+
+        return JSONObject.of(backgroundColor, shapes);
     }
 
 

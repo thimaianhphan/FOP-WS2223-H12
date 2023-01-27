@@ -1,15 +1,17 @@
 package h12.gui.components;
 
 import h12.exceptions.JSONParseException;
+import h12.gui.shapes.ColorHelper;
 import h12.gui.shapes.MyShape;
+import h12.ioFactory.FileSystemIOFactory;
 import h12.json.JSON;
 import h12.json.JSONElement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.util.NoSuchElementException;
 
 /**
  * A class handling the loading of a canvas from a JSON file.
@@ -34,7 +36,18 @@ public class LoadCanvasHandler extends FileOperationHandler {
      * Shows a {@link JFileChooser} dialog to the user and tries to load the canvas stored in the selected file.
      */
     public void load() {
-        crash(); //TODO H5.5 - remove if implemented
+        String directory = System.getProperty("user.dir");
+        String chosenFile = selectFile(directory);
+        if (chosenFile != null && checkFileName(chosenFile)) {
+            json.setIOFactory(new FileSystemIOFactory());
+            try {
+                JSONElement jsonElement = json.parse(chosenFile);
+                canvasFromJSONElement(jsonElement);
+                setupNewFrame();
+            } catch(JSONParseException ex) {
+                showErrorDialog(ex.getMessage());
+            }
+        }
     }
 
     /**
@@ -44,7 +57,13 @@ public class LoadCanvasHandler extends FileOperationHandler {
      * @throws JSONParseException If the json file does not describe a valid canvas.
      */
     public void canvasFromJSONElement(JSONElement element) throws JSONParseException {
-        crash(); //TODO H5.5 - remove if implemented
+        if (element == null) throw new JSONParseException("The given File is empty!");
+        try {
+            backgroundColor = ColorHelper.fromJSON(element.getValueOf("background"));
+            shapes = Arrays.stream(element.getValueOf("shapes").getArray()).map(MyShape::fromJSON).toList();
+        } catch (UnsupportedOperationException | NoSuchElementException ex) {
+            throw new JSONParseException("Invalid MyShape format!");
+        }
     }
 
     /**

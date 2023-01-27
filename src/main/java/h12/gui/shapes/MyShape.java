@@ -7,9 +7,9 @@ import h12.json.JSONObject;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import static org.tudalgo.algoutils.student.Student.crash;
+import java.util.NoSuchElementException;
 
 /**
  * An abstract class for a shape that can be interactively drawn in a {@link ContentPanel}.
@@ -36,7 +36,26 @@ public abstract class MyShape {
      * @throws JSONParseException If the given {@link JSONObject} does not represent a valid shape.
      */
     public static MyShape fromJSON(JSONElement element) throws JSONParseException {
-        return crash(); //TODO H5.2 - remove if implemented
+        var v = Arrays.stream(element.getValueOf("name").getArray()).toList();
+
+        JSONElement jsonElement = v.get(0);
+        String nameOfShape = jsonElement.getString();
+
+        ShapeType shapeType = ShapeType.fromString(nameOfShape);
+        if (shapeType == null) throw new JSONParseException("Invalid shape type: " + nameOfShape + "!");
+
+        try {
+            MyShape shape;
+            switch (shapeType) {
+                case RECTANGLE -> shape = jsonToShapeConverter.rectangleFromJSON(jsonElement);
+                case CUSTOM_LINE -> shape = jsonToShapeConverter.customLineFromJSON(jsonElement);
+                case CIRCLE -> shape = jsonToShapeConverter.circleFromJSON(jsonElement);
+                default -> shape = jsonToShapeConverter.polygonFromJSON(jsonElement);
+            }
+            return shape;
+        } catch (UnsupportedOperationException | NoSuchElementException ex) {
+            throw new JSONParseException(ex.getMessage());
+        }
     }
 
     /**

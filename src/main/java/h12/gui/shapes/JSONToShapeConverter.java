@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.tudalgo.algoutils.student.Student.crash;
-
 public class JSONToShapeConverter {
 
     /**
@@ -23,7 +21,19 @@ public class JSONToShapeConverter {
      * @see MyPolygon#toJSON() For the expected content of the {@link JSONElement}
      */
     public MyPolygon polygonFromJSON(JSONElement element) throws JSONParseException {
-        return crash(); //TODO H5.2 - remove if implemented
+        try {
+            List<Integer> x = Arrays.stream(element.getValueOf("x").getArray()).map(JSONElement::getInteger).toList();
+            List<Integer> y = Arrays.stream(element.getValueOf("y").getArray()).map(JSONElement::getInteger).toList();
+
+            Color fillColor = ColorHelper.fromJSON(element.getValueOf("fillColor"));
+            Color borderColor = ColorHelper.fromJSON(element.getValueOf("borderColor"));
+
+            int edges = element.getValueOf("edges").getInteger();
+
+            return new MyPolygon(x, y, fillColor, borderColor, edges);
+        } catch (UnsupportedOperationException | NoSuchElementException ex) {
+            throw new JSONParseException(ex.getMessage());
+        }
     }
 
     /**
