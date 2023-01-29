@@ -15,7 +15,7 @@ public class TutorTests_H2_WriteJSONStringTest extends TutorTests_WriteJSONTest 
         JSONString string = new JSONStringNode(input);
         String expected = "\"" + input + "\"";
 
-        testWriteJSONNode(string, expected, 1, null);
+        testWriteJSONNode(string, expected, 1);
     }
 
 }

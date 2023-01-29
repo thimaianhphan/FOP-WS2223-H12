@@ -5,7 +5,7 @@ import h12.exceptions.TrailingCommaException;
 import h12.exceptions.UnexpectedCharacterException;
 import h12.json.JSONElement;
 import h12.json.JSONNumber;
-import h12.json.parser.implementation.node.JSONArrayNodeParser;
+import h12.json.parser.implementation.node.JSONElementNodeParser;
 import h12.json.parser.implementation.node.JSONObjectNodeParser;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import static h12.json.JSONObject.JSONObjectEntry;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @TestForSubmission
 public class TutorTests_H3_3_JSONObjectNodeParserTest extends TutorTests_JSONParseTest {
@@ -31,7 +29,7 @@ public class TutorTests_H3_3_JSONObjectNodeParserTest extends TutorTests_JSONPar
             extension,
             JSONElement::getObjectEntries,
             this::mockObjectEntryParser,
-            elementNodeParser -> verify(elementNodeParser.getObjectEntryParser(), times(3)).parse());
+            createNodeParserVerifier(3, JSONElementNodeParser::getObjectEntryParser, "JSONObjectEntryNodeParser"));
     }
 
     @ParameterizedTest
@@ -40,7 +38,7 @@ public class TutorTests_H3_3_JSONObjectNodeParserTest extends TutorTests_JSONPar
 
         //missing opening bracket
         testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONObjectNodeParser::new, "\"%s\": %d, \"%s\": %d, \"%s\": %d}"
-                .formatted(k1, v1, k2, v2, k3, v3), this::mockObjectEntryParser,
+            .formatted(k1, v1, k2, v2, k3, v3), this::mockObjectEntryParser,
             "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <{>, but was: <\">");
 
         //wrong opening bracket

@@ -6,6 +6,8 @@ import h12.json.implementation.node.JSONNumberNode;
 import h12.json.parser.JSONParser;
 import h12.json.parser.implementation.node.JSONElementNodeParser;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
+import org.mockito.exceptions.base.MockitoAssertionError;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 
@@ -27,14 +29,28 @@ public class TutorTests_H4_1_JSONParserTest {
         JSONElement result = new JSONNumberNode(1);
 
         JSONElementNodeParser elementNodeParser = mock(JSONElementNodeParser.class);
+        InOrder inOrder = inOrder(elementNodeParser);
 
         when(elementNodeParser.parse()).thenReturn(result);
 
         JSONParser parser = new JSONParser(elementNodeParser);
-        JSONElement actual = parser.parse();
 
-        verify(elementNodeParser, times(1)).parse();
-        verify(elementNodeParser, times(1)).checkEndOfFile();
+        JSONElement actual = callObject(parser::parse, context, TR -> "Unexpected exception was thrown");
+
+        try {
+            verify(elementNodeParser, times(1)).parse();
+        } catch (MockitoAssertionError e) {
+            fail(context, TR -> "Expected method parse of class elementNodeParser to be called excatly once but it wasn't");
+        }
+
+        try {
+            verify(elementNodeParser, times(1)).checkEndOfFile();
+        } catch (MockitoAssertionError e) {
+            fail(context, TR -> "Expected method checkEndOfFile of class elementNodeParser to be called excatly once but it wasn't");
+        }
+
+        inOrder.verify(elementNodeParser, times(1)).parse();
+        inOrder.verify(elementNodeParser, times(1)).checkEndOfFile();
 
         assertEquals(result, actual, context, TR -> "Method did not return the expected value");
     }
