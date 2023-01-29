@@ -60,8 +60,9 @@ public class TutorTests_H3_3_JSONArrayNodeParserTest extends TutorTests_JSONPars
             "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <]>, but was: <%d>".formatted(v3));
 
         //wrong comma
-        testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONArrayNodeParser::new, "[%d, %d ;%d]".formatted(v1, v2, v3),
-            this::mockNumberParser, "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <,>, but was: <;>");
+        testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONArrayNodeParser::new, "[%d, %d; %d]".formatted(v1, v2, v3),
+            this::mockNumberParser, "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <,>, but was: <;>",
+            "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <]>, but was: <;>");
     }
 
 }

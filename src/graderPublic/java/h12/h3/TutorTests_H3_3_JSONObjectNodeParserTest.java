@@ -38,7 +38,7 @@ public class TutorTests_H3_3_JSONObjectNodeParserTest extends TutorTests_JSONPar
 
         //missing opening bracket
         testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONObjectNodeParser::new, "\"%s\": %d, \"%s\": %d, \"%s\": %d}"
-            .formatted(k1, v1, k2, v2, k3, v3), this::mockObjectEntryParser,
+                .formatted(k1, v1, k2, v2, k3, v3), this::mockObjectEntryParser,
             "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <{>, but was: <\">");
 
         //wrong opening bracket
@@ -72,7 +72,8 @@ public class TutorTests_H3_3_JSONObjectNodeParserTest extends TutorTests_JSONPar
         //wrong comma
         testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONObjectNodeParser::new,
             "{\"%s\": %d, \"%s\": %d; \"%s\": %d}".formatted(k1, v1, k2, v2, k3, v3), this::mockNumberParser,
-            "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <,>, but was: <;>");
+            "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <,>, but was: <;>",
+            "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <}>, but was: <;>");
     }
 
 }
