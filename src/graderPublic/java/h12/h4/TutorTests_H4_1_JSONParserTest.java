@@ -40,13 +40,15 @@ public class TutorTests_H4_1_JSONParserTest {
         try {
             verify(elementNodeParser, times(1)).parse();
         } catch (MockitoAssertionError e) {
-            fail(context, TR -> "Expected method parse of class elementNodeParser to be called excatly once but it wasn't");
+            fail(context, TR -> "Expected method parse of class elementNodeParser to be called exactly once and before checkEndOfFile but it wasn't"
+            + "\n Original message: " + e.getMessage());
         }
 
         try {
             verify(elementNodeParser, times(1)).checkEndOfFile();
         } catch (MockitoAssertionError e) {
-            fail(context, TR -> "Expected method checkEndOfFile of class elementNodeParser to be called excatly once but it wasn't");
+            fail(context, TR -> "Expected method checkEndOfFile of class elementNodeParser to be called exactly once and after parse but it wasn't"
+            + "\n Original message: " + e.getMessage());
         }
 
         inOrder.verify(elementNodeParser, times(1)).parse();

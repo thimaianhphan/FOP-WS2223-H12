@@ -142,7 +142,8 @@ public class TutorTests_JSONParseTest {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (MockitoAssertionError e) {
-                fail(context, TR -> "Expected the method parse of class JSONElementNodeParser to be called exactly " + count + "times but it wasn't");
+                fail(context, TR -> "Expected the method parse of class JSONElementNodeParser to be called exactly " + count + "times but it wasn't"
+                 + "\n Original message: " + e.getMessage());
             }
         };
     }
@@ -157,7 +158,8 @@ public class TutorTests_JSONParseTest {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (MockitoAssertionError e) {
-                fail(context, TR -> "Expected the method parse of class " + parser + " to be called exactly " + count + "times but it wasn't");
+                fail(context, TR -> "Expected the method parse of class " + parser + " to be called exactly " + count + "times but it wasn't"
+                + "\n Original message: " + e.getMessage());
             }
         };
     }

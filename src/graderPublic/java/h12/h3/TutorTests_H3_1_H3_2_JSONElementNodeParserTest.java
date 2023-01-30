@@ -299,8 +299,9 @@ public class TutorTests_H3_1_H3_2_JSONElementNodeParserTest extends TutorTests_J
             try {
                 verifier.accept(elementParser);
             } catch (MockitoAssertionError e) {
-                fail(context, TR -> "Expected the method parse() of class " + expected.getClass().getSimpleName() +
-                    "Parser to be called once but it did not get called or got called multiple times");
+                fail(context, TR -> "Expected the method parse() of class " + expected.getClass().getSimpleName()
+                    + "Parser to be called once but it did not get called or got called multiple times"
+                    + "\n Original message: " + e.getMessage());
             }
         }
     }

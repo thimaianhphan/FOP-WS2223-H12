@@ -75,7 +75,8 @@ public class TutorTests_WriteJSONTest {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (MockitoAssertionError e) {
-                fail(context, TR -> "Expected the method write of the object " + jsonElement.toString() +" to be called exactly " + count + "times but it wasn't");
+                fail(context, TR -> "Expected the method write of the object " + jsonElement.toString() +
+                    " to be called exactly " + count + " times but it wasn't.\n Original message: " + e.getMessage());
             }
         };
     }
