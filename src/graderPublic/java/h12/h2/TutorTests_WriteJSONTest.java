@@ -30,8 +30,6 @@ public class TutorTests_WriteJSONTest {
 
         String actual = getActual(element, indentation, context);
 
-        if (verifier != null) verifier.accept(context);
-
         String message = "Methode did not write the correct String to the BufferedWriter.";
 
         if (actual.replace(" ", "").replace("\n", "")
@@ -41,6 +39,8 @@ public class TutorTests_WriteJSONTest {
 
         String finalMessage = message;
         assertEquals(createJSONString(expected), createJSONString(actual), context, TR -> finalMessage);
+
+        if (verifier != null) verifier.accept(context);
     }
 
     public String createJSONString(String json) {
