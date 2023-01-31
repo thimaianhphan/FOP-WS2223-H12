@@ -15,7 +15,7 @@ public class TutorTests_H2_WriteJSONConstantTest extends TutorTests_WriteJSONTes
             JSONConstant jsonConstant = new JSONConstantNode(constant);
             String expected = constant.getSpelling();
 
-            testWriteJSONNode(jsonConstant, expected, 1, null);
+            testWriteJSONNode(jsonConstant, expected, 1);
         }
     }
 

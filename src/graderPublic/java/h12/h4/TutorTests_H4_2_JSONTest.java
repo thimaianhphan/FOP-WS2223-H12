@@ -46,7 +46,7 @@ public class TutorTests_H4_2_JSONTest {
         ArgumentCaptor<LookaheadReader> argumentCaptor = ArgumentCaptor.forClass(LookaheadReader.class);
         when(parserFactory.createParser(argumentCaptor.capture())).thenReturn(parser);
 
-        JSONElement actual = json.parse("test.json");
+        JSONElement actual = callObject(() -> json.parse("test.json"), context, TR -> "Unexpected exception was thrown");
 
         LookaheadReader actualReader = argumentCaptor.getValue();
         Field readerField = LookaheadReader.class.getDeclaredField("reader");
@@ -124,7 +124,7 @@ public class TutorTests_H4_2_JSONTest {
         ArgumentCaptor<Integer> argumentCaptorIndentation = ArgumentCaptor.forClass(Integer.class);
         doNothing().when(input).write(argumentCaptorWriter.capture(), argumentCaptorIndentation.capture());
 
-        json.write("test.json", input);
+        call(() -> json.write("test.json", input), context, TR -> "Unexpected exception was thrown");
 
         BufferedWriter actualWriter = argumentCaptorWriter.getValue();
         Integer actualIndentation = argumentCaptorIndentation.getValue();

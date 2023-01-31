@@ -15,7 +15,7 @@ public class TutorTests_H2_WriteJSONNumberTest extends TutorTests_WriteJSONTest 
         JSONNumber number = new JSONNumberNode(input);
         String expected = input.toString();
 
-        testWriteJSONNode(number, expected, 1, null);
+        testWriteJSONNode(number, expected, 1);
     }
 
     @ParameterizedTest
@@ -24,6 +24,6 @@ public class TutorTests_H2_WriteJSONNumberTest extends TutorTests_WriteJSONTest 
         JSONNumber number = new JSONNumberNode(input);
         String expected = input.toString();
 
-        testWriteJSONNode(number, expected, 1, null);
+        testWriteJSONNode(number, expected, 1);
     }
 }

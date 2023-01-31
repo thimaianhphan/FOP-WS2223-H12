@@ -12,9 +12,6 @@ import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import java.io.IOException;
 import java.util.List;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 @TestForSubmission
 public class TutorTests_H3_3_JSONArrayNodeParserTest extends TutorTests_JSONParseTest {
 
@@ -27,13 +24,12 @@ public class TutorTests_H3_3_JSONArrayNodeParserTest extends TutorTests_JSONPars
             extension,
             element -> List.of(element.getArray()),
             this::mockNumberParser,
-            elementNodeParser -> verify(elementNodeParser, times(3)).parse());
+            createElementParserVerifier(3));
     }
 
     @ParameterizedTest
     @CsvSource("1, 2, 3") //single digit
     public void testParseException(Integer v1, Integer v2, Integer v3) throws IOException {
-
         //missing opening bracket
         testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONArrayNodeParser::new, "%d, %d, %d]".formatted(v1, v2, v3),
             this::mockNumberParser, "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <[>, but was: <%d>".formatted(v1));
@@ -64,8 +60,9 @@ public class TutorTests_H3_3_JSONArrayNodeParserTest extends TutorTests_JSONPars
             "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <]>, but was: <%d>".formatted(v3));
 
         //wrong comma
-        testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONArrayNodeParser::new, "[%d, %d ;%d]".formatted(v1, v2, v3),
-            this::mockNumberParser, "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <,>, but was: <;>");
+        testParseExceptionWithMessage(UnexpectedCharacterException.class, JSONArrayNodeParser::new, "[%d, %d; %d]".formatted(v1, v2, v3),
+            this::mockNumberParser, "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <,>, but was: <;>",
+            "An exception occurred while trying to parse a JSON file. Received an unexpected character. Expected: <]>, but was: <;>");
     }
 
 }

@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static h12.json.JSONObject.JSONObjectEntry;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
 
@@ -36,13 +32,6 @@ public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest 
             mockedJSONObjectEntry3
         );
 
-        String actual = getActual(object, indentation);
-
-        verify(mockedJSONObjectEntry1, times(1)).write(any(), anyInt());
-        verify(mockedJSONObjectEntry2, times(1)).write(any(), anyInt());
-        verify(mockedJSONObjectEntry3, times(1)).write(any(), anyInt());
-
-
         StringBuilder entryIndentation = new StringBuilder("  ");
         StringBuilder endIndentation = new StringBuilder();
 
@@ -51,8 +40,20 @@ public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest 
             endIndentation.append("  ");
         }
 
+        Context context = contextBuilder()
+            .add("input", "{\n%s\"%s\": %d,\n%s\"%s\": %d,\n%s\"%s\": %d\n%s}"
+                .formatted(entryIndentation, k1, v1, entryIndentation, k2, v2, entryIndentation, k3, v3, endIndentation))
+            .add("indentation", indentation)
+            .subject("JSONObjectNode#write(BufferedWriter, int)")
+            .build();
+
+        String actual = getActual(object, indentation, context);
+
+        createVerifier(mockedJSONObjectEntry1, 1).andThen(createVerifier(mockedJSONObjectEntry2, 1))
+            .andThen(createVerifier(mockedJSONObjectEntry3, 1)).accept(context);
+
         boolean withoutWhitespaceEqual = false;
-        String closestExpected = "";
+        String closestExpected = null;
 
         List<JSONObjectEntry> entries = new ArrayList<>(object.getObjectEntries());
         for (List<JSONObjectEntry> permutation : getAllPermutations(entries)) { //the order of the elements is not relevant
@@ -76,7 +77,7 @@ public class TutorTests_H2_WriteJSONObjectTest extends TutorTests_WriteJSONTest 
             }
         }
 
-        Context context = contextBuilder()
+        context = contextBuilder()
             .add("input", closestExpected)
             .add("indentation", indentation)
             .subject("JSONObjectNode#write(BufferedWriter, int)")
