@@ -2,3 +2,5 @@
 
 Beachten Sie die Hinweise zum Herunterladen, Importieren, Bearbeitern, Exportieren und Hochladen in unserem
 [Studierenden-Guide](https://wiki.tudalgo.org/)
+
+Read and create JSON File from the shape that user draws
